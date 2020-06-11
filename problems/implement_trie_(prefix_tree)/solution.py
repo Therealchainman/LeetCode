@@ -5,8 +5,8 @@ class Trie:
         """
         Initialize your data structure here.
         """
-        self.children = defaultdict(Trie)
         self.ends = False
+        self.children = defaultdict(Trie)
 
     def insert(self, word: str) -> None:
         """
@@ -16,14 +16,15 @@ class Trie:
             self.ends = True
         else:
             self.children[word[0]].insert(word[1:])
-
+            
     def search(self, word: str) -> bool:
         """
         Returns if the word is in the trie.
         """
         if not word:
             return self.ends
-        return self.children[word[0]].search(word[1:]) if word[0] in self.children else False
+        else:
+            return self.children[word[0]].search(word[1:]) if word[0] in self.children else False
 
     def startsWith(self, prefix: str) -> bool:
         """
@@ -31,7 +32,8 @@ class Trie:
         """
         if not prefix:
             return True
-        return self.children[prefix[0]].startsWith(prefix[1:]) if prefix[0] in self.children else False
+        else:
+            return self.children[prefix[0]].startsWith(prefix[1:]) if prefix[0] in self.children else False
         
 '''
 

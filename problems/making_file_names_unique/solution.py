@@ -15,3 +15,7 @@ class Solution:
                 names[i] = new_folder
         return names
             
+        
+"""
+{wano: 5, wano(1): 0, wano(3): 0, wano(2): 0, wano(4): 0, wano(5): 0, wano(3)(1): 0}
+"""

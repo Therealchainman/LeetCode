@@ -3,14 +3,13 @@ class Solution:
         P=[0]
         for a in A:
             P.append(P[-1]+a)
-        seen=set()
+        s=set()
         ans=0
-        for psum in P:
-            if psum-t in seen:
-                seen={psum}
+        for p in P:
+            if p-t in s:
+                s={p}
                 ans+=1
             else:
-                seen.add(psum)
+                s.add(p)
         return ans
-                
         

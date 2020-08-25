@@ -1,35 +1,58 @@
 class TrieNode:
     def __init__(self):
-        self.children, self.end_node = {}, 0
-         
+        self.edges={}
+    
+    def get_edge(self,edge):
+        return self.edges[edge]
+    
+    def add_edge(self,edge):
+        self.edges.setdefault(edge,TrieNode())
+            
+    def has_edge(self,edge):
+        return edge in self.edges
+    
+    def isWord(self):
+        return "$" in self.edges
+    
 class Trie:
+    
     def __init__(self):
-        self.root = TrieNode()
-
-    def insert(self, word):
-        root = self.root
-        for symbol in word:
-            root = root.children.setdefault(symbol, TrieNode())
-        root.end_node = 1
-
-class StreamChecker:
-    def __init__(self, words):
-        self.trie = Trie()
-        self.Stream = deque()
-        for word in words: self.trie.insert(word[::-1])
-         
-    def query(self, letter):
-        self.Stream.appendleft(letter)
-        cur = self.trie.root
-        for c in self.Stream:
-            if c in cur.children:
-                cur = cur.children[c]
-                if cur.end_node: return True
-            else: break
-        return False
+        self.root=TrieNode()
         
+    def insert(self,word):
+        cur=self.root
+        for c in word:
+            cur.add_edge(c)
+            cur=cur.get_edge(c)
+        cur.add_edge("$")
+        
+    def search(self, word):
+        cur=self.root
+        for c in word:
+            if cur.isWord():
+                return True
+            if not cur.has_edge(c):
+                return False
+            cur=cur.get_edge(c)
+        return cur.isWord()
+from collections import deque
+class StreamChecker:
+    def __init__(self, W):
+        self.prefix=deque()
+        self.trie=Trie()
+        for w in W:
+            self.trie.insert(w[::-1])
+
+    def query(self, c):
+        self.prefix.appendleft(c)
+        return self.trie.search(self.prefix)
 
 
+"""
+time:  9:00AM
+challenge2:  Can I learn how to use setdefault in this problem.  
+
+"""
 # Your StreamChecker object will be instantiated and called as such:
 # obj = StreamChecker(words)
 # param_1 = obj.query(letter)

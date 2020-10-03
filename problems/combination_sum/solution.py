@@ -1,17 +1,18 @@
 class Solution:
-    def combinationSum(self, cand,target):
-        n=len(cand)
-        ret=[]
-        def dfs(target,nums,idx):
+    def combinationSum(self, A,t):
+        self.ans=[]
+        n=len(A)
+        def dfs(target,cands,idx):
             if target==0:
-                ret.append(list(nums))
+                self.ans.append(list(cands))
                 return
             if target<0:
                 return
             
             for i in range(idx,n):
-                nums.append(cand[i])
-                dfs(target-cand[i],nums,i)
-                nums.pop()
-        dfs(target,[],0)
-        return ret
+                cands.append(A[i])
+                dfs(target-A[i],cands,i)
+                cands.pop()
+        dfs(t,[],0)
+        return self.ans
+        

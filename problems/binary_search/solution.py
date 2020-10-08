@@ -1,13 +1,17 @@
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
-        l, r, m = 0, len(nums) - 1, 0
-        while (1):
-            m = int((l + r) / 2)
-            if (nums[m] == target):
-                return m
-            if (m == l and m == r):
-                return -1
-            if (nums[m] < target):
-                l = m + 1
-            else:
-                r = max(m - 1, 0)
+        n=len(nums)
+        def possible(val,target):
+            return val<=target
+        def binary_search(target):
+            lo,hi=0,n-1
+            while lo<hi:
+                mid=hi+lo+1>>1
+                if possible(nums[mid],target):
+                    lo=mid
+                else:
+                    hi=mid-1
+            return lo
+        x=binary_search(target)
+        print(x)
+        return x if nums[x]==target else -1

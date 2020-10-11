@@ -1,15 +1,13 @@
+import string
 class Solution:
-    def isPalindrome(self, S):
-        S = S.lower()
-        SS=""
-        for c in S:
-            if ord("a")<=ord(c)<=ord("z") or ord("0")<=ord(c)<=ord("9"):
-                SS+=c
-        l,r=0,len(SS)-1
-        while l < r:
-            if SS[l]!=SS[r]:
-                return False
-            l+=1
-            r-=1
-        return True
+    def isPalindrome(self, s: str) -> bool:
+        cands=string.ascii_lowercase
+        S=""
+        for ch in s:
+            if ch.lower() in cands or ch in string.digits:
+                S+=ch.lower()
+        n=len(S)
+        return all(S[k]==S[n-1-k] for k in range(n>>1))
+
         
+            

@@ -1,14 +1,16 @@
 func canFormArray(arr []int, pieces [][]int) bool {
-    // The idea is to form a map that maps element -> index. 
-    mp := make(map[int]int)
-    for i,p := range pieces {
-        mp[p[0]]=i;
+    n := len(arr)
+    m := len(pieces)
+    pMap := make(map[int]int)
+    for j:=0;j<m;j++ {
+        pMap[pieces[j][0]]=j
     }
-    var i = 0
-    for i<len(arr) {
-        if index, found := mp[arr[i]]; found {
-            for _,elem := range pieces[index] {
-                if arr[i]!=elem {
+    i := 0
+    for i < n {
+        index, found := pMap[arr[i]]
+        if found {
+            for j:=0;j<len(pieces[index]);j++ {
+                if pieces[index][j]!=arr[i] {
                     return false
                 }
                 i++

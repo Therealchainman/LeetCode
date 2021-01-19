@@ -1,12 +1,15 @@
 func countVowelStrings(n int) int {
-    var prefix = []int{1,2,3,4,5}
-    if n==1 {
-        return 5
+    dp := make([][]int, n+1)
+    for i := range dp {
+        dp[i] = make([]int, 6)
     }
-    for i := 2;i<=n;i++ {
-        for j := 1;j<5;j++ {
-            prefix[j]+=prefix[j-1]
+    for j:=0;j<6;j++ {
+        dp[0][j] = 1
+    }
+    for i:=1;i<=n;i++ {
+        for j:=1;j<6;j++ {
+            dp[i][j] = dp[i-1][j]+dp[i][j-1]
         }
     }
-    return prefix[4]
+    return dp[n][5]
 }

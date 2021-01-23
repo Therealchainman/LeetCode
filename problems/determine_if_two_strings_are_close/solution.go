@@ -1,40 +1,34 @@
-func helper(word string) map[rune]int {
-    mp := make(map[rune]int)
-    for _, c := range word {
-        mp[c]++
+func setCharCountWord(word string) map[rune]int {
+    charCountMap := make(map[rune]int)
+    for _, ch := range word {
+        charCountMap[ch]++
     }
-    return mp
+    return charCountMap
 }
 
-func helper1(mp map[rune]int) map[int]int {
-    cnt := make(map[int]int)
-    for _, val := range mp {
-        cnt[val]++
+func setFreq(charMap map[rune]int) map[int]int {
+    freq := make(map[int]int)
+    for _, cnt := range charMap {
+        freq[cnt]++
     }
-    return cnt
+    return freq
 }
 
 func closeStrings(word1 string, word2 string) bool {
-    if len(word1)!=len(word2) {
-        return false
-    }
-    mp1:=helper(word1)
-    mp2:=helper(word2)
-    for key,_ := range mp1 {
-        if _, found := mp2[key]; !found {
+    charCountWord1 := setCharCountWord(word1)
+    charCountWord2 := setCharCountWord(word2)
+    for ch, _ := range charCountWord1 {
+        if _, found := charCountWord2[ch]; !found {
             return false
         }
     }
-    for key,_ := range mp2 {
-        if _, found := mp1[key]; !found {
+    for ch, _ := range charCountWord2 {
+        if _, found := charCountWord1[ch]; !found {
             return false
         }
     }
-    cnt1:=helper1(mp1)
-    cnt2:=helper1(mp2)
-    if len(cnt1)!=len(cnt2) {
-        return false
-    }
-    eq := reflect.DeepEqual(cnt1,cnt2)
+    freqWord1 := setFreq(charCountWord1)
+    freqWord2 := setFreq(charCountWord2)
+    eq := reflect.DeepEqual(freqWord1, freqWord2)
     return eq
 }

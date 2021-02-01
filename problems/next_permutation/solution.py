@@ -37,11 +37,3 @@ class Solution:
         j=binary_search(idx+1,n-1,A[idx])
         swap(idx,j)
         reverse(idx+1,n)
-            
-"""
-TTTFFF
-FFFTTT
-return first occurence of T.  So I can't use something lol.  Not sure what though haha.  
-
-
-"""

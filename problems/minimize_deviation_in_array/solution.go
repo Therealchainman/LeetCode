@@ -1,46 +1,62 @@
-type IntHeap []int
-
-func (h IntHeap) Len() int {return len(h)}
-func (h IntHeap) Less(i int, j int) bool {return h[i] < h[j]}
-func (h IntHeap) Swap(i int, j int) {h[i], h[j] = h[j], h[i]}
-
-func (h *IntHeap) Push(x interface{}) {
-    *h = append(*h, x.(int))
+type pair struct {
+    num int
+    limit int
 }
 
-func (h *IntHeap) Pop() interface{} {
-    old := *h
-    n := len(old)
-    x := old[n-1]
-    *h = old[:n-1]
+type minHeap []*pair
+
+func (h minHeap) Len() int {return len(h)}
+func (h minHeap) Less(i, j int) bool {return h[i].num < h[j].num}
+func (h minHeap) Swap(i, j int) {h[i],h[j]=h[j],h[i]}
+
+func (h *minHeap) Push(x interface{}) {
+    *h = append(*h, x.(*pair))
+}
+
+func (h *minHeap) Pop() interface{} {
+    n := len(*h)
+    x := (*h)[n-1]
+    *h = (*h)[:n-1]
     return x
 }
 
-func min(a int, b int ) int {
-    if a < b {return a}
-    return b
-}
 
 func minimumDeviation(nums []int) int {
-    h := &IntHeap{}
-    lo := math.MaxInt64
-    for i:=0;i<len(nums);i++ {
-        if nums[i] & 1 == 1 {
-            nums[i] = 2*nums[i]
+    minHeap := &minHeap{}
+    var mx int
+    for _, n := range nums {
+        tmp := n
+        for tmp%2==0 {
+            tmp/=2
         }
-        lo = min(lo, nums[i])
-        heap.Push(h, -nums[i])
+        heap.Push(minHeap,&pair{tmp,max(n,tmp*2)})
+        mx = max(mx, tmp)
     }
-    ret := math.MaxInt64
-    for true {
-        hi := -heap.Pop(h).(int)
-        ret = min(ret, hi-lo)
-        if hi & 1 == 1 {
-            break
+    var p *pair
+    ans := int(1e9)
+    for minHeap.Len() == len(nums) {
+        p = heap.Pop(minHeap).(*pair)
+        ans = min(ans, mx - p.num)
+        if p.num < p.limit {
+            p.num*=2
+            heap.Push(minHeap,p)
+            mx = max(mx, p.num)
         }
-        hi/=2
-        lo = min(lo, hi)
-        heap.Push(h, -hi)
     }
-    return ret
+    
+    return ans
+}
+
+func max(x, y int) int {
+    if x > y {
+        return x
+    }
+    return y
+}
+
+func min(x, y int) int {
+    if x < y {
+        return x
+    }
+    return y
 }

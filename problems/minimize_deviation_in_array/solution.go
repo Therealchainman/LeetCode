@@ -6,7 +6,13 @@ type pair struct {
 type minHeap []*pair
 
 func (h minHeap) Len() int {return len(h)}
-func (h minHeap) Less(i, j int) bool {return h[i].num < h[j].num}
+func (h minHeap) Less(i, j int) bool {
+    if h[i] != h[j] {
+        return h[i].num < h[j].num
+    } else {
+        return h[i].limit < h[j].limit
+    }
+}
 func (h minHeap) Swap(i, j int) {h[i],h[j]=h[j],h[i]}
 
 func (h *minHeap) Push(x interface{}) {

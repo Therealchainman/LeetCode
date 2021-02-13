@@ -1,12 +1,6 @@
+import "math/bits"
 func numberOfSteps (num int) int {
-    var steps = 0
-    for num > 0 {
-        steps++
-        if num%2 == 0 {
-            num/=2
-        } else {
-            num--
-        }
-    }
-    return steps
+    if num==0{return 0}
+    u := uint(num)
+    return bits.UintSize - bits.LeadingZeros(u) + bits.OnesCount(u) - 1
 }

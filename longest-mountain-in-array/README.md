@@ -1,3 +1,4 @@
+[Discussion Post (created on 20/1/2021 at 17:30)](https://leetcode.com/problems/longest-mountain-in-array/discuss/?currentPage=1&orderBy=most_votes&query=)  
 <h2>845. Longest Mountain in Array</h2><h3>Medium</h3><hr><div><p>You may recall that an array <code>arr</code> is a <strong>mountain array</strong> if and only if:</p>
 
 <ul>
